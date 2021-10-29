@@ -15,28 +15,84 @@ using System.Threading.Tasks;
 namespace SeleniumGrid
 {
     [TestFixture]
-    public class Gmail
+    [Parallelizable]
+    public class Gmail1
     {
         IWebDriver driver;
         LoginPageObject login;
         DriverSetUp driverSetUp;
-        public Gmail()
+        public Gmail1()
         {
             driverSetUp = new DriverSetUp();
             driver = driverSetUp.GetWebDriver();
             login = new LoginPageObject(driver);
         }
-        [Test]
+        [Test, Category("Smoke")]
         public void ComposeEmail()
         {
-            Debug.WriteLine("RC : Launch Application");
+            Debug.WriteLine("RC : ComposeEmail");
             login.LaunchApplication();
             login.LoginToApplication();
             login.LogoutFromApplication();
             login.CloseApplication();
         }
-
-        [TearDown]// [TestCleanup]   //@After
+        [Test, Category("Smoke")]
+        public void ReplyEmail()
+        {
+            Debug.WriteLine("RC : ReplyEmail");
+            login.LaunchApplication();
+            login.LoginToApplication();
+            login.LogoutFromApplication();
+            login.CloseApplication();
+        }
+       // [SetUp]
+        public void Intialize()
+        {
+            
+        }
+       // [TearDown]// [TestCleanup]   //@After
+        public void CleanUp()
+        {
+            driverSetUp.KillChromeDriver();
+        }
+    }
+    [TestFixture]
+    [Parallelizable]
+    public class Gmail2
+    {
+        IWebDriver driver;
+        LoginPageObject login;
+        DriverSetUp driverSetUp;
+        public Gmail2()
+        {
+            driverSetUp = new DriverSetUp();
+            driver = driverSetUp.GetWebDriver();
+            login = new LoginPageObject(driver);
+        }
+        [Test, Category("Smoke")]
+        public void ComposeEmail()
+        {
+            Debug.WriteLine("RC : ComposeEmail");
+            login.LaunchApplication();
+            login.LoginToApplication();
+            login.LogoutFromApplication();
+            login.CloseApplication();
+        }
+        [Test, Category("Smoke")]
+        public void ReplyEmail()
+        {
+            Debug.WriteLine("RC : ReplyEmail");
+            login.LaunchApplication();
+            login.LoginToApplication();
+            login.LogoutFromApplication();
+            login.CloseApplication();
+        }
+        //[SetUp]
+        public void Intialize()
+        {
+           
+        }
+        //[TearDown]// [TestCleanup]   //@After
         public void CleanUp()
         {
             driverSetUp.KillChromeDriver();
