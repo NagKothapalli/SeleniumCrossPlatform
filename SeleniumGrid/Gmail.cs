@@ -10,12 +10,13 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SeleniumGrid
 {
     [TestFixture]
-    [Parallelizable]
+   [Parallelizable]
     public class Gmail1
     {
         IWebDriver driver;
@@ -23,9 +24,7 @@ namespace SeleniumGrid
         DriverSetUp driverSetUp;
         public Gmail1()
         {
-            driverSetUp = new DriverSetUp();
-            driver = driverSetUp.GetWebDriver();
-            login = new LoginPageObject(driver);
+            
         }
         [Test, Category("Smoke")]
         public void ComposeEmail()
@@ -33,27 +32,31 @@ namespace SeleniumGrid
             Debug.WriteLine("RC : ComposeEmail");
             login.LaunchApplication();
             login.LoginToApplication();
+            Thread.Sleep(20000);
             login.LogoutFromApplication();
             login.CloseApplication();
         }
-        [Test, Category("Smoke")]
+        [Test, Category("Regression")]
         public void ReplyEmail()
         {
             Debug.WriteLine("RC : ReplyEmail");
             login.LaunchApplication();
             login.LoginToApplication();
+            Thread.Sleep(20000);
             login.LogoutFromApplication();
             login.CloseApplication();
         }
-       // [SetUp]
+        [SetUp]
         public void Intialize()
         {
-            
+            driverSetUp = new DriverSetUp();
+            driver = driverSetUp.GetWebDriver("local","chrome");
+            login = new LoginPageObject(driver);
         }
-       // [TearDown]// [TestCleanup]   //@After
+        [TearDown]// [TestCleanup]   //@After
         public void CleanUp()
         {
-            driverSetUp.KillChromeDriver();
+            driver.Quit();
         }
     }
     [TestFixture]
@@ -65,9 +68,7 @@ namespace SeleniumGrid
         DriverSetUp driverSetUp;
         public Gmail2()
         {
-            driverSetUp = new DriverSetUp();
-            driver = driverSetUp.GetWebDriver();
-            login = new LoginPageObject(driver);
+            
         }
         [Test, Category("Smoke")]
         public void ComposeEmail()
@@ -75,6 +76,7 @@ namespace SeleniumGrid
             Debug.WriteLine("RC : ComposeEmail");
             login.LaunchApplication();
             login.LoginToApplication();
+            Thread.Sleep(20000);
             login.LogoutFromApplication();
             login.CloseApplication();
         }
@@ -84,18 +86,21 @@ namespace SeleniumGrid
             Debug.WriteLine("RC : ReplyEmail");
             login.LaunchApplication();
             login.LoginToApplication();
+            Thread.Sleep(20000);
             login.LogoutFromApplication();
             login.CloseApplication();
         }
-        //[SetUp]
+        [SetUp]
         public void Intialize()
         {
-           
+            driverSetUp = new DriverSetUp();
+            driver = driverSetUp.GetWebDriver("local", "firefox");
+            login = new LoginPageObject(driver);
         }
-        //[TearDown]// [TestCleanup]   //@After
+        [TearDown]// [TestCleanup]   //@After
         public void CleanUp()
         {
-            driverSetUp.KillChromeDriver();
+            driver.Quit();
         }
     }
 }

@@ -15,6 +15,23 @@ namespace SeleniumGrid
     public class DriverSetUp
     {
         public IWebDriver driver;
+        public IWebDriver GetWebDriver(String etype,String browser)
+        {
+            //var browser = ConfigurationManager.AppSettings["Browser"];
+            switch (etype.ToLower())
+            {
+                case "local":
+                    driver = GetLocalDriver(browser);
+                    break;
+                case "remote":
+                    driver = GetRemoteDriver(browser);
+                    break;
+                default:
+                    driver = GetLocalDriver(browser);
+                    break;
+            }
+            return driver;
+        }
         public IWebDriver GetWebDriver()
         {
             var browser = ConfigurationManager.AppSettings["Browser"];
@@ -42,13 +59,13 @@ namespace SeleniumGrid
         }
         public IWebDriver GetLocalDriver(string browser)
         {
-            if(ConfigurationManager.AppSettings["Browser"].ToUpper().Equals("CHROME"))
+            if(browser.ToUpper().Equals("CHROME"))
             {
                 var options = new ChromeOptions();
                 options.AddArguments("--test-type");
                 driver =  new ChromeDriver();
             }
-            else if (ConfigurationManager.AppSettings["Browser"].ToUpper().Equals("FIREFOX"))
+            else if (browser.ToUpper().Equals("FIREFOX"))
             {
                 var options = new FirefoxOptions();
                 options.AddArguments("--test-type");

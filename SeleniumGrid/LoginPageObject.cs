@@ -30,7 +30,7 @@ namespace SeleniumGrid
         {
             Console.WriteLine("LoginToApplication");
             emailAddress.SendKeys(ConfigurationManager.AppSettings["username"]);
-            nextButton.Click();
+            //nextButton.Click();
         }
         public void LogoutFromApplication()
         {
